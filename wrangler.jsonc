@@ -1,5 +1,14 @@
 {
   "name": "rivenza-site",
   "compatibility_date": "2026-06-11",
-  "assets": { "directory": "./" }
+  "main": "src/worker.js",
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "AIRTABLE_BASE_ID": "appMISRQ22WObO7Ci",
+    "AIRTABLE_TABLE_ID": "tblkxadDikWYn0FAW"
+  }
 }

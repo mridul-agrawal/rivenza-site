@@ -1,3 +1,6 @@
 .git
 .wrangler
 wrangler.jsonc
+src
+node_modules
+README-application-form.md
