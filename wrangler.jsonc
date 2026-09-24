@@ -2,6 +2,7 @@
   "name": "rivenza-site",
   "compatibility_date": "2026-06-11",
   "main": "src/worker.js",
+  "keep_vars": true,
   "assets": {
     "directory": "./",
     "binding": "ASSETS",
