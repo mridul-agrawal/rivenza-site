@@ -252,7 +252,6 @@ input:focus,textarea:focus{outline:none; border-color:var(--gold-deep); box-shad
     <h2 id="h2">Capsule and key art</h2>
     <div class="q" data-req>
       <label for="capsule_games">Which games or projects was it for, and what did you make for each?</label>
-      <p class="help">For each one, give the name, its Steam link if it has one, and what you personally made. For example: Ember Tactics, store.steampowered.com/app/123, main capsule and library hero.</p>
       <textarea id="capsule_games" name="capsule_games"></textarea>
       <p class="err">Tell us at least one game or project.</p>
     </div>
@@ -273,7 +272,6 @@ input:focus,textarea:focus{outline:none; border-color:var(--gold-deep); box-shad
     </div>
     <div class="q" id="q-files">
       <p class="qlabel">Upload capsule or key art you can share with us <span class="opt">Optional</span></p>
-      <p class="help">Useful for work under NDA or not public yet. Nothing you upload is shared outside the studio.</p>
       <label class="drop" id="drop">
         <input type="file" id="files" accept="image/png,image/jpeg,image/webp,application/pdf" multiple>
         <strong>Choose files</strong> or drop them here
@@ -287,22 +285,9 @@ input:focus,textarea:focus{outline:none; border-color:var(--gold-deep); box-shad
   <!-- 4 -->
   <section class="step" data-step="3" aria-labelledby="h3">
     <h2 id="h3">Rates and availability</h2>
-    <div class="q" data-req>
-      <label for="freelance_rate">What was your most recent freelance illustration project, and what did you charge for it?</label>
-      <p class="help">What the project was, the amount and the currency. If you have not freelanced yet, just say so.</p>
-      <textarea id="freelance_rate" name="freelance_rate"></textarea>
-      <p class="err">Tell us about your last project, or that you have not freelanced yet.</p>
-    </div>
     <div class="q">
-      <label for="role_pay">If you have held a relevant art job or long engagement, what were you paid? <span class="opt">Optional</span></label>
-      <p class="help">Monthly or per project, with the currency.</p>
-      <textarea id="role_pay" name="role_pay"></textarea>
-    </div>
-    <div class="q" data-req>
-      <label for="usual_rate">What do you usually charge for one finished key art illustration?</label>
-      <p class="help">Add your day or monthly rate too, if you work that way.</p>
-      <textarea id="usual_rate" name="usual_rate"></textarea>
-      <p class="err">Give us your usual rate.</p>
+      <label for="pay">What were you paid in your most recent role or gig?</label>
+      <textarea id="pay" name="pay"></textarea>
     </div>
     <div class="q" data-req data-radio="availability">
       <p class="qlabel" id="l-av">When could you start?</p>
