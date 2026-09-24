@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Apply: 2D Illustrator | Rivenza</title>
+<meta name="description" content="Apply to paint the key art and design the logo for Rivenza's tactical RPG.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rivenza.in/apply/illustrator/">
+<meta property="og:title" content="Apply: 2D Illustrator at Rivenza">
+<meta property="og:description" content="Paint the art that will be the first thing players ever see of our tactical RPG.">
+<meta property="og:image" content="https://rivenza.in/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 82.65 84'%3E%3Cpath d='M20.14 10 L52.14 10 L72.65 32 L71.70 38 L46.12 48 L68 74 L50 74 L31.80 50 L29.80 50 L26 74 L10 74 Z M36.03 17 L31.59 45 L61.81 31 Z' fill-rule='evenodd' fill='%23E7B24A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141414; --gold:#E7B24A; --ember:#E0492E; --green:#2DBE57; --bone:#ECE3CF;
+  --dusk:#1c1510; --dusk2:#26190f; --bone-dim:#b9ac8d; --bone-faint:#9d9077;
+  --panel:#221a10; --panel2:#1a130b; --gold-line:rgba(231,178,74,.38);
+  --field:#150f08; --ease-out:cubic-bezier(.16,1,.3,1); --tile:48px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-padding-top:90px;}
+body{background:#191309; color:var(--bone); font-family:'Inter',system-ui,sans-serif; font-size:16.5px; line-height:1.65; overflow-x:hidden; min-height:100vh;}
+::selection{background:var(--gold); color:var(--ink);}
+a{color:var(--gold); text-decoration-color:rgba(231,178,74,.5); text-decoration-thickness:2px; text-underline-offset:3px;}
+a:hover{color:var(--ember);}
+.gridbg{position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:linear-gradient(to right,rgba(231,178,74,.06) 1px,transparent 1px),linear-gradient(to bottom,rgba(231,178,74,.06) 1px,transparent 1px);
+  background-size:var(--tile) var(--tile);}
+.wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:0 20px;}
+
+/* header */
+header.site{position:sticky; top:0; z-index:30; background:rgba(24,18,13,.96); backdrop-filter:blur(6px); border-bottom:1px solid rgba(231,178,74,.35);}
+header.site::before{content:""; display:block; height:3px; background:linear-gradient(90deg,var(--gold),rgba(231,178,74,.25));}
+header.site .bar{display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:58px; max-width:760px; margin:0 auto; padding:0 20px;}
+.sym{height:36px; width:auto; display:block;}
+.sym path{fill:var(--gold);}
+.back-home{font-size:14.5px; color:var(--bone-dim); text-decoration:none; font-weight:500;}
+.back-home:hover{color:var(--gold);}
+
+/* intro band */
+.intro{position:relative; z-index:1; padding:44px 0 34px; background:linear-gradient(165deg,var(--dusk2) 0%,var(--dusk) 60%,#15100b 100%); border-bottom:2px solid rgba(231,178,74,.45);}
+.intro::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(to right,rgba(231,178,74,.10) 1px,transparent 1px),linear-gradient(to bottom,rgba(231,178,74,.10) 1px,transparent 1px);
+  background-size:var(--tile) var(--tile); mask-image:radial-gradient(ellipse 120% 100% at 30% 40%,black 30%,transparent 95%);}
+.herologo{height:46px; width:auto; display:block; margin-bottom:26px;}
+.intro h1{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:clamp(32px,6vw,46px); line-height:1.05; letter-spacing:.01em; margin-bottom:14px;}
+.intro .role-kicker{display:inline-block; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em; color:var(--ink); background:var(--gold); padding:3px 12px; margin-bottom:14px;
+  clip-path:polygon(0 50%,7px 0,calc(100% - 7px) 0,100% 50%,calc(100% - 7px) 100%,7px 100%);}
+.intro p{max-width:620px; color:var(--bone); font-size:17px;}
+.intro p + p{margin-top:12px; color:var(--bone-dim); font-size:16px;}
+.terms{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;}
+.terms span{font-size:13.5px; font-weight:600; color:var(--gold); border:1px solid rgba(231,178,74,.45); padding:4px 11px;}
+
+/* progress: five grid tiles, a tactics cursor marks the current one */
+.march{position:relative; z-index:1; padding-top:30px; padding-bottom:6px;}
+.tiles{display:grid; grid-template-columns:repeat(5,1fr); gap:0; border:1px solid rgba(231,178,74,.3);}
+.tile{position:relative; height:54px; display:flex; align-items:center; justify-content:center; gap:8px; padding:0 6px;
+  border-right:1px solid rgba(231,178,74,.22); color:var(--bone-faint); font-size:13px; font-weight:500; text-align:center; line-height:1.2;
+  transition:background .15s steps(2,end), color .15s steps(2,end);}
+.tile:last-child{border-right:none;}
+.tile .n{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:16px;}
+.tile.done{background:rgba(231,178,74,.10); color:var(--bone-dim);}
+.tile.done .n{color:var(--green);}
+.tile.now{background:rgba(231,178,74,.18); color:var(--bone);}
+.tile.now .n{color:var(--gold);}
+.tile.skip{color:rgba(157,144,119,.45); background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(157,144,119,.07) 6px 8px);}
+.tile.skip .lbl{text-decoration:line-through;}
+.cursor{position:absolute; top:0; height:54px; pointer-events:none; transition:left .28s steps(4,end), width .28s steps(4,end);}
+.cursor i{position:absolute; width:12px; height:12px; border:2.5px solid var(--ember);}
+.cursor i:nth-child(1){top:-2px; left:-2px; border-right:none; border-bottom:none;}
+.cursor i:nth-child(2){top:-2px; right:-2px; border-left:none; border-bottom:none;}
+.cursor i:nth-child(3){bottom:-2px; left:-2px; border-right:none; border-top:none;}
+.cursor i:nth-child(4){bottom:-2px; right:-2px; border-left:none; border-top:none;}
+@media(max-width:620px){ .tile .lbl{display:none;} }
+
+/* step panels */
+main{position:relative; z-index:1; padding:26px 0 80px;}
+.window{position:relative; background:var(--panel); border:1.5px solid var(--gold-line); box-shadow:7px 7px 0 rgba(0,0,0,.35); padding:40px 34px 32px;}
+.window::before,.window::after,.window .stud::before,.window .stud::after{content:""; position:absolute; width:9px; height:9px; background:var(--gold); opacity:.55;}
+.window::before{top:-5px; left:-5px;} .window::after{top:-5px; right:-5px;}
+.window .stud::before{bottom:-5px; left:-5px;} .window .stud::after{bottom:-5px; right:-5px;}
+.plate{position:absolute; top:-15px; left:24px; padding:5px 16px; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:13.5px; letter-spacing:.2em;
+  background:var(--gold); color:var(--ink); clip-path:polygon(0 50%,8px 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,8px 100%);}
+.step{display:none;}
+.step.on{display:block; animation:enter .35s var(--ease-out);}
+@keyframes enter{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+.step h2{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:clamp(24px,4vw,30px); line-height:1.15; margin-bottom:8px;}
+.step .sub{color:var(--bone-dim); max-width:600px; margin-bottom:28px;}
+
+/* questions */
+.q{margin-bottom:26px;}
+.q:last-of-type{margin-bottom:6px;}
+.q > label, .q > .qlabel{display:block; font-weight:600; font-size:16px; color:var(--bone); margin-bottom:4px; line-height:1.45;}
+.q .opt{font-weight:400; color:var(--bone-faint); font-size:14px; margin-left:6px;}
+.q .help{font-size:14px; color:var(--bone-faint); margin-bottom:10px; max-width:600px;}
+input[type=text],input[type=email],input[type=url],textarea{
+  width:100%; font:inherit; font-size:16px; color:var(--bone); background:var(--field);
+  border:1.5px solid rgba(231,178,74,.28); border-radius:2px; padding:12px 14px; margin-top:6px;
+  transition:border-color .12s steps(2,end), box-shadow .12s steps(2,end);}
+textarea{min-height:112px; resize:vertical; line-height:1.55;}
+input::placeholder,textarea::placeholder{color:#6f6552;}
+input:focus,textarea:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(231,178,74,.18);}
+.q.bad input,.q.bad textarea{border-color:var(--ember);}
+.err{display:none; margin-top:8px; font-size:14px; color:#f07a60; font-weight:500;}
+.q.bad .err{display:block;}
+
+/* choice tiles */
+.choices{display:grid; gap:8px; margin-top:8px;}
+.choices.cols{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}
+.choices.cols .choice{padding:12px 12px; gap:10px;}
+.choice{position:relative; display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer;
+  background:var(--panel2); border:1.5px solid rgba(231,178,74,.24); font-size:15px; color:var(--bone-dim);
+  transition:border-color .1s steps(2,end), background .1s steps(2,end), color .1s steps(2,end);}
+.choice input{position:absolute; opacity:0; pointer-events:none;}
+.choice .mark{flex:none; width:16px; height:16px; border:2px solid rgba(231,178,74,.55);}
+.choice:hover{border-color:rgba(231,178,74,.6); color:var(--bone);}
+.choice:has(input:checked){border-color:var(--gold); background:rgba(231,178,74,.12); color:var(--bone);}
+.choice:has(input:checked) .mark{background:var(--gold); box-shadow:inset 0 0 0 3px var(--panel2);}
+.choice:has(input:focus-visible){outline:2px solid var(--gold); outline-offset:2px;}
+.q.bad .choice{border-color:rgba(224,73,46,.55);}
+
+/* uploads */
+.drop{margin-top:8px; border:1.5px dashed rgba(231,178,74,.5); background:var(--panel2); padding:22px 18px; text-align:center; cursor:pointer;
+  transition:background .12s steps(2,end), border-color .12s steps(2,end);}
+.drop:hover,.drop.over{background:rgba(231,178,74,.08); border-color:var(--gold);}
+.drop strong{color:var(--gold);}
+.drop small{display:block; margin-top:4px; color:var(--bone-faint); font-size:13.5px;}
+.drop input{display:none;}
+.files{list-style:none; margin-top:10px; display:grid; gap:6px;}
+.files li{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 12px; background:var(--field); border:1px solid rgba(231,178,74,.22); font-size:14.5px;}
+.files li span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.files li em{font-style:normal; color:var(--bone-faint); font-size:13px; margin-left:8px;}
+.files button{flex:none; background:none; border:none; color:var(--bone-faint); font:inherit; font-size:13.5px; cursor:pointer; text-decoration:underline;}
+.files button:hover{color:var(--ember);}
+
+/* nav buttons */
+.nav{display:flex; justify-content:space-between; align-items:center; gap:14px; margin-top:32px; padding-top:22px; border-top:1px solid rgba(231,178,74,.2);}
+.btn{display:inline-flex; align-items:center; gap:10px; font:inherit; font-weight:600; font-size:15.5px; padding:13px 24px; border-radius:3px; cursor:pointer; border:none;
+  background:var(--ember); color:#fff; box-shadow:4px 4px 0 rgba(0,0,0,.45); transition:background .12s steps(2,end), transform .12s steps(2,end), box-shadow .12s steps(2,end);}
+.btn:hover{background:#c43d24; transform:translate(2px,2px); box-shadow:2px 2px 0 rgba(0,0,0,.45);}
+.btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+.btn[disabled]{opacity:.6; cursor:progress; transform:none;}
+.btn.quiet{background:transparent; color:var(--bone-dim); border:1.5px solid rgba(185,172,141,.5); box-shadow:none;}
+.btn.quiet:hover{color:var(--gold); border-color:var(--gold); transform:none;}
+.nav .spacer{flex:1;}
+.saved{font-size:13px; color:var(--bone-faint);}
+.formerr{display:none; margin-top:18px; padding:12px 14px; border:1.5px solid var(--ember); background:rgba(224,73,46,.1); color:var(--bone); font-size:15px;}
+.formerr.show{display:block;}
+.hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+
+/* done */
+.done-panel{text-align:left;}
+.done-panel h2{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:32px; margin-bottom:10px;}
+.done-panel p{color:var(--bone-dim); max-width:560px; margin-bottom:12px;}
+.done-panel .plate{background:var(--green);}
+
+footer.site{position:relative; z-index:1; border-top:2px solid rgba(231,178,74,.35); background:#120d07; padding:26px 0 34px; color:var(--bone-faint); font-size:13.5px;}
+footer.site .wrap{display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+
+@media(max-width:560px){
+  .window{padding:34px 18px 24px;}
+  .intro{padding:34px 0 28px;}
+  .nav{flex-wrap:wrap;}
+  .nav .btn{flex:1; justify-content:center;}
+  .nav .spacer,.saved{display:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important;}
+}
+</style>
+</head>
+<body>
+<div class="gridbg" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="bar">
+    <a href="https://rivenza.in/" aria-label="Rivenza home"><svg class="sym" viewBox="0 0 82.65 84" aria-hidden="true"><path d="M20.14 10 L52.14 10 L72.65 32 L71.70 38 L46.12 48 L68 74 L50 74 L31.80 50 L29.80 50 L26 74 L10 74 Z M36.03 17 L31.59 45 L61.81 31 Z" fill-rule="evenodd"/></svg></a>
+    <a class="back-home" href="https://rivenza.in/#hiring">Back to rivenza.in</a>
+  </div>
+</header>
+
+<div class="intro">
+  <div class="wrap">
+    <svg class="herologo" viewBox="0 0 473.7 116" role="img" aria-label="Rivenza"><g transform="translate(15,12)"><g transform="scale(1.0952)"><path d="M20.14 10 L52.14 10 L72.65 32 L71.70 38 L46.12 48 L68 74 L50 74 L31.80 50 L29.80 50 L26 74 L10 74 Z M36.03 17 L31.59 45 L61.81 31 Z" fill-rule="evenodd" fill="#E7B24A"/></g><path d="M230 289H402C467 289 495 263 495 203V173C494 154 494 136 494 125C494 56 498 35 516 0H677V27C654 40 645 55 645 87C641 302 637 312 544 352C626 384 667 443 667 532C667 590 647 643 612 679C579 713 533 729 471 729H80V0H230ZM230 414V604H411C454 604 471 600 490 585C508 570 517 545 517 511C517 476 508 448 490 433C473 419 454 414 411 414Z" transform="translate(120.52,58) scale(0.06407,-0.06407)" fill="#E7B24A"/><path d="M213 729H63V0H213Z" transform="translate(172.78,58) scale(0.06407,-0.06407)" fill="#E7B24A"/><path d="M397 0 647 729H496L337 180L175 729H24L270 0Z" transform="translate(196.59,58) scale(0.06407,-0.06407)" fill="#E7B24A"/><path d="M229 314H578V439H229V604H606V729H79V0H624V125H229Z" transform="translate(245.32,58) scale(0.06407,-0.06407)" fill="#E7B24A"/><path d="M511 0H661V729H511V233L222 729H68V0H218V504Z" transform="translate(294.05,58) scale(0.06407,-0.06407)" fill="#E7B24A"/><path d="M578 729H30V604H403L30 125V0H578V125H206L578 604Z" transform="translate(346.31,58) scale(0.06407,-0.06407)" fill="#E7B24A"/><path d="M501 147 549 0H703L451 729H285L26 0H179L228 147ZM460 272H270L365 557Z" transform="translate(391.45,58) scale(0.06407,-0.06407)" fill="#E7B24A"/><path d="M385 604H598V729H14V604H235V0H385Z" transform="translate(122.52,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M229 314H578V439H229V604H606V729H79V0H624V125H229Z" transform="translate(140.08,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M682 482C677 545 664 585 633 626C577 700 487 741 378 741C172 741 44 594 44 358C44 123 171 -23 374 -23C556 -23 676 82 685 249H539C529 156 471 103 378 103C262 103 194 197 194 356C194 517 265 613 383 613C470 613 519 571 539 482Z" transform="translate(158.50,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M507 331V0H657V729H506V456H218V729H68V0H218V331Z" transform="translate(177.76,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M511 0H661V729H511V233L222 729H68V0H218V504Z" transform="translate(197.02,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M390 741C288 741 204 707 142 640C77 570 40 468 40 359C40 250 77 147 142 78C205 10 287 -23 391 -23C495 -23 577 10 640 78C703 145 742 251 742 354C742 468 705 571 640 640C576 709 496 741 390 741ZM391 613C514 613 592 513 592 355C592 205 511 105 391 105C269 105 190 205 190 359C190 513 269 613 391 613Z" transform="translate(216.28,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M230 729H80V0H579V125H230Z" transform="translate(236.40,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M390 741C288 741 204 707 142 640C77 570 40 468 40 359C40 250 77 147 142 78C205 10 287 -23 391 -23C495 -23 577 10 640 78C703 145 742 251 742 354C742 468 705 571 640 640C576 709 496 741 390 741ZM391 613C514 613 592 513 592 355C592 205 511 105 391 105C269 105 190 205 190 359C190 513 269 613 391 613Z" transform="translate(253.96,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M711 392H419V267H585C581 226 571 201 549 175C513 131 457 105 400 105C278 105 192 211 192 361C192 518 268 613 396 613C448 613 492 598 525 569C546 551 557 534 570 496H711C693 647 571 741 395 741C185 741 42 586 42 359C42 138 186 -23 383 -23C481 -23 547 12 603 94L621 -2H711Z" transform="translate(274.08,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M213 729H63V0H213Z" transform="translate(294.20,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M229 314H578V439H229V604H606V729H79V0H624V125H229Z" transform="translate(306.66,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/><path d="M607 507C606 658 505 741 321 741C146 741 45 659 45 517C45 404 102 349 250 321L352 301C452 282 489 254 489 195C489 134 433 97 342 97C240 97 183 140 178 218H32C41 62 148 -23 334 -23C522 -23 633 64 633 213C633 328 575 388 440 414L326 436C219 457 188 478 188 531C188 586 236 621 314 621C409 621 462 581 467 507Z" transform="translate(325.08,80) scale(0.01532,-0.01532)" fill="#9a8a5f"/></g></svg>
+    <span class="role-kicker">OPEN ROLE</span>
+    <h1>2D Illustrator</h1>
+    <p>We are looking for one experienced illustrator to paint the key art and store art that will be the first thing players ever see of our tactical RPG, and to design the game's logo.</p>
+    <p>You would work directly with the founder, and your work is looked at the day you share it. If you have made art that sold a game on a storefront and that excites you more than it scares you, this form takes a few minutes, and your answers save as you go.</p>
+    <div class="terms"><span>Remote</span><span>Contract</span><span>Named credit</span></div>
+  </div>
+</div>
+
+<div class="march wrap" aria-hidden="true">
+  <div class="tiles" id="tiles">
+    <div class="tile" data-i="0"><span class="n">1</span><span class="lbl">About you</span></div>
+    <div class="tile" data-i="1"><span class="n">2</span><span class="lbl">Your work</span></div>
+    <div class="tile" data-i="2"><span class="n">3</span><span class="lbl">Capsule art</span></div>
+    <div class="tile" data-i="3"><span class="n">4</span><span class="lbl">Rates</span></div>
+    <div class="tile" data-i="4"><span class="n">5</span><span class="lbl">Wrap up</span></div>
+  </div>
+  <div class="cursor" id="cursor"><i></i><i></i><i></i><i></i></div>
+</div>
+
+<main>
+<div class="wrap">
+<form id="apply" novalidate>
+  <input type="hidden" name="src" id="src">
+  <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+  <!-- 1 -->
+  <section class="step window" data-step="0" aria-labelledby="h0">
+    <span class="stud"></span><div class="plate">ABOUT YOU</div>
+    <h2 id="h0">First, who are you?</h2>
+    <p class="sub">So we know who to write back to.</p>
+    <div class="q" data-req>
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" autocomplete="name">
+      <p class="err">Tell us your name.</p>
+    </div>
+    <div class="q" data-req data-type="email">
+      <label for="email">Email address</label>
+      <p class="help">This is where we will reply.</p>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com">
+      <p class="err">Enter an email address we can reach you at.</p>
+    </div>
+    <div class="q" data-req>
+      <label for="location">Where are you based?</label>
+      <p class="help">City and country, so we can find a call time that works for both of us.</p>
+      <input type="text" id="location" name="location" autocomplete="address-level2" placeholder="Pune, India">
+      <p class="err">Tell us your city and country.</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step window" data-step="1" aria-labelledby="h1">
+    <span class="stud"></span><div class="plate">YOUR WORK</div>
+    <h2 id="h1">Show us your work</h2>
+    <p class="sub">Your portfolio shows the range, and one favourite piece tells us what you value most.</p>
+    <div class="q" data-req data-type="url">
+      <label for="portfolio">Portfolio link</label>
+      <input type="url" id="portfolio" name="portfolio" inputmode="url" placeholder="https://www.artstation.com/yourname">
+      <p class="err">Add a link to your portfolio, starting with https://</p>
+    </div>
+    <div class="q">
+      <label for="profiles">Other places we can see your work <span class="opt">Optional</span></label>
+      <p class="help">ArtStation, X, Instagram, LinkedIn or anywhere else.</p>
+      <input type="text" id="profiles" name="profiles">
+    </div>
+    <div class="q" data-req data-radio="years_illustration">
+      <p class="qlabel" id="l-yi">How many years have you worked as a 2D illustrator or digital artist?</p>
+      <div class="choices cols" role="radiogroup" aria-labelledby="l-yi">
+        <label class="choice"><input type="radio" name="years_illustration" value="Less than 2 years"><span class="mark"></span>Less than 2 years</label>
+        <label class="choice"><input type="radio" name="years_illustration" value="2 to 4 years"><span class="mark"></span>2 to 4 years</label>
+        <label class="choice"><input type="radio" name="years_illustration" value="5 to 9 years"><span class="mark"></span>5 to 9 years</label>
+        <label class="choice"><input type="radio" name="years_illustration" value="10 years or more"><span class="mark"></span>10 years or more</label>
+      </div>
+      <p class="err">Choose one.</p>
+    </div>
+    <div class="q" data-req data-radio="years_games">
+      <p class="qlabel" id="l-yg">How many years have you worked as an artist on video games?</p>
+      <div class="choices cols" role="radiogroup" aria-labelledby="l-yg">
+        <label class="choice"><input type="radio" name="years_games" value="None yet"><span class="mark"></span>None yet</label>
+        <label class="choice"><input type="radio" name="years_games" value="Less than 2 years"><span class="mark"></span>Less than 2 years</label>
+        <label class="choice"><input type="radio" name="years_games" value="2 to 4 years"><span class="mark"></span>2 to 4 years</label>
+        <label class="choice"><input type="radio" name="years_games" value="5 to 9 years"><span class="mark"></span>5 to 9 years</label>
+        <label class="choice"><input type="radio" name="years_games" value="10 years or more"><span class="mark"></span>10 years or more</label>
+      </div>
+      <p class="err">Choose one.</p>
+    </div>
+    <div class="q" data-req data-type="url">
+      <label for="best_artwork">Link to the artwork you are proudest of</label>
+      <p class="help">Any kind of piece, as long as it is the one you would show first.</p>
+      <input type="url" id="best_artwork" name="best_artwork" inputmode="url" placeholder="https://">
+      <p class="err">Add a link to the piece, starting with https://</p>
+    </div>
+    <div class="q" data-req data-radio="logo">
+      <p class="qlabel" id="l-logo">Have you designed game logos or title lettering?</p>
+      <div class="choices" role="radiogroup" aria-labelledby="l-logo">
+        <label class="choice"><input type="radio" name="logo" value="Yes, and my portfolio shows it"><span class="mark"></span>Yes, and my portfolio shows it</label>
+        <label class="choice"><input type="radio" name="logo" value="Yes, but it is not in my portfolio"><span class="mark"></span>Yes, but it is not in my portfolio</label>
+        <label class="choice"><input type="radio" name="logo" value="No"><span class="mark"></span>No</label>
+      </div>
+      <p class="err">Choose one.</p>
+    </div>
+    <div class="q" data-req data-radio="ai">
+      <p class="qlabel" id="l-ai">Do you use generative AI anywhere in your process?</p>
+      <div class="choices" role="radiogroup" aria-labelledby="l-ai">
+        <label class="choice"><input type="radio" name="ai" value="No, never"><span class="mark"></span>No, never</label>
+        <label class="choice"><input type="radio" name="ai" value="Only for reference or early ideas"><span class="mark"></span>Only for reference or early ideas</label>
+        <label class="choice"><input type="radio" name="ai" value="Yes, in production work"><span class="mark"></span>Yes, in production work</label>
+      </div>
+      <p class="err">Choose one.</p>
+    </div>
+    <div class="q" data-req data-radio="capsule">
+      <p class="qlabel" id="l-cap">Have you made Steam capsule art, key art, posters or other marketing art for a game?</p>
+      <div class="choices cols" role="radiogroup" aria-labelledby="l-cap">
+        <label class="choice"><input type="radio" name="capsule" value="Yes"><span class="mark"></span>Yes</label>
+        <label class="choice"><input type="radio" name="capsule" value="No"><span class="mark"></span>No</label>
+      </div>
+      <p class="err">Choose one.</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="step window" data-step="2" aria-labelledby="h2">
+    <span class="stud"></span><div class="plate">CAPSULE ART</div>
+    <h2 id="h2">Your capsule and key art</h2>
+    <p class="sub">This is the work we care about most for this role, so give us the specifics.</p>
+    <div class="q" data-req>
+      <label for="capsule_games">Which games or projects was it for, and what did you make for each?</label>
+      <p class="help">For each one, give the name, its Steam link if it has one, and what you personally made. For example: Ember Tactics, store.steampowered.com/app/123, main capsule and library hero.</p>
+      <textarea id="capsule_games" name="capsule_games"></textarea>
+      <p class="err">Tell us at least one game or project.</p>
+    </div>
+    <div class="q" data-req data-radio="years_capsule">
+      <p class="qlabel" id="l-yc">How many years have you been making capsule or key art?</p>
+      <div class="choices cols" role="radiogroup" aria-labelledby="l-yc">
+        <label class="choice"><input type="radio" name="years_capsule" value="Less than 1 year"><span class="mark"></span>Less than 1 year</label>
+        <label class="choice"><input type="radio" name="years_capsule" value="1 to 2 years"><span class="mark"></span>1 to 2 years</label>
+        <label class="choice"><input type="radio" name="years_capsule" value="3 to 5 years"><span class="mark"></span>3 to 5 years</label>
+        <label class="choice"><input type="radio" name="years_capsule" value="6 years or more"><span class="mark"></span>6 years or more</label>
+      </div>
+      <p class="err">Choose one.</p>
+    </div>
+    <div class="q" data-req data-type="url">
+      <label for="best_capsule">Link to the capsule or key art piece you are proudest of</label>
+      <input type="url" id="best_capsule" name="best_capsule" inputmode="url" placeholder="https://">
+      <p class="err">Add a link to the piece, starting with https://</p>
+    </div>
+    <div class="q" id="q-files">
+      <p class="qlabel">Upload capsule or key art you can share with us <span class="opt">Optional</span></p>
+      <p class="help">Useful for work under NDA or not public yet. Nothing you upload is shared outside the studio.</p>
+      <label class="drop" id="drop">
+        <input type="file" id="files" accept="image/png,image/jpeg,image/webp,application/pdf" multiple>
+        <strong>Choose files</strong> or drop them here
+        <small>PNG, JPG, WebP or PDF, up to 5 files of 5 MB each</small>
+      </label>
+      <ul class="files" id="filelist"></ul>
+      <p class="err" id="fileerr"></p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="step window" data-step="3" aria-labelledby="h3">
+    <span class="stud"></span><div class="plate">RATES</div>
+    <h2 id="h3">Rates and availability</h2>
+    <p class="sub">We will share the full scope and ask for a proper quote later. For now, a sense of what you normally charge is enough.</p>
+    <div class="q" data-req>
+      <label for="freelance_rate">What was your most recent freelance illustration project, and what did you charge for it?</label>
+      <p class="help">What the project was, the amount and the currency. If you have not freelanced yet, just say so.</p>
+      <textarea id="freelance_rate" name="freelance_rate"></textarea>
+      <p class="err">Tell us about your last project, or that you have not freelanced yet.</p>
+    </div>
+    <div class="q">
+      <label for="role_pay">If you have held a relevant art job or long engagement, what were you paid? <span class="opt">Optional</span></label>
+      <p class="help">Monthly or per project, with the currency.</p>
+      <textarea id="role_pay" name="role_pay"></textarea>
+    </div>
+    <div class="q" data-req>
+      <label for="usual_rate">What do you usually charge for one finished key art illustration?</label>
+      <p class="help">Add your day or monthly rate too, if you work that way.</p>
+      <textarea id="usual_rate" name="usual_rate"></textarea>
+      <p class="err">Give us your usual rate.</p>
+    </div>
+    <div class="q" data-req data-radio="availability">
+      <p class="qlabel" id="l-av">When could you start?</p>
+      <div class="choices cols" role="radiogroup" aria-labelledby="l-av">
+        <label class="choice"><input type="radio" name="availability" value="Immediately"><span class="mark"></span>Immediately</label>
+        <label class="choice"><input type="radio" name="availability" value="Within a month"><span class="mark"></span>Within a month</label>
+        <label class="choice"><input type="radio" name="availability" value="Later than a month"><span class="mark"></span>Later than a month</label>
+      </div>
+      <p class="err">Choose one.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step window" data-step="4" aria-labelledby="h4">
+    <span class="stud"></span><div class="plate">WRAP UP</div>
+    <h2 id="h4">Anything else?</h2>
+    <p class="sub">Ask us anything, or tell us what the form did not give you room for.</p>
+    <div class="q">
+      <label for="anything">Questions for us, or anything else you would like to share <span class="opt">Optional</span></label>
+      <textarea id="anything" name="anything"></textarea>
+    </div>
+    <div id="ts"></div>
+  </section>
+
+  <div class="formerr" id="formerr" role="alert"></div>
+
+  <div class="nav" id="nav">
+    <button type="button" class="btn quiet" id="prev">Back</button>
+    <span class="spacer"></span>
+    <span class="saved" id="saved"></span>
+    <button type="button" class="btn" id="next">Continue</button>
+  </div>
+</form>
+
+<section class="window done-panel" id="done" hidden>
+  <span class="stud"></span><div class="plate">RECEIVED</div>
+  <h2>Application received</h2>
+  <p>Thank you for applying. The founder reads every application personally, and if your work fits what we are building you will get an email from hiring@rivenza.in.</p>
+  <p>If you need to add something, apply again with the same email address and we will update your application.</p>
+  <p><a href="https://rivenza.in/">Back to rivenza.in</a></p>
+</section>
+</div>
+</main>
+
+<footer class="site"><div class="wrap"><span>Rivenza Technologies Private Limited</span><span>Questions about this role: <a href="mailto:hiring@rivenza.in">hiring@rivenza.in</a></span></div></footer>
+
+<script>
+(() => {
+  const ENDPOINT = '/api/apply/illustrator';
+  const TURNSTILE_SITE_KEY = ''; // paste the Cloudflare Turnstile site key here to switch on bot protection
+  const DRAFT_KEY = 'rivenza-apply-illustrator';
+  const MAX_FILES = 5, MAX_BYTES = 5 * 1024 * 1024;
+
+  const form = document.getElementById('apply');
+  const steps = [...form.querySelectorAll('.step')];
+  const tiles = [...document.querySelectorAll('.tile')];
+  const cursor = document.getElementById('cursor');
+  const prev = document.getElementById('prev'), next = document.getElementById('next');
+  const saved = document.getElementById('saved'), formerr = document.getElementById('formerr');
+  let cur = 0, files = [];
+
+  // source tag from the link the applicant followed, e.g. /apply/illustrator/?src=reddit
+  const params = new URLSearchParams(location.search);
+  document.getElementById('src').value = (params.get('src') || params.get('utm_source') || 'direct').slice(0, 60);
+
+  const noCapsule = () => (form.elements.capsule.value === 'No');
+  const order = () => [0, 1, 2, 3, 4].filter(i => !(i === 2 && noCapsule()));
+
+  function paint(){
+    steps.forEach((s, i) => s.classList.toggle('on', i === cur));
+    const seq = order(), pos = seq.indexOf(cur);
+    tiles.forEach((t, i) => {
+      t.classList.toggle('skip', i === 2 && noCapsule());
+      t.classList.toggle('now', i === cur);
+      t.classList.toggle('done', seq.includes(i) && seq.indexOf(i) < pos);
+    });
+    const t = tiles[cur], box = document.getElementById('tiles');
+    cursor.style.left = (t.offsetLeft) + 'px';
+    cursor.style.width = t.offsetWidth + 'px';
+    cursor.style.top = box.offsetTop + 'px';
+    prev.style.visibility = pos === 0 ? 'hidden' : 'visible';
+    next.textContent = pos === seq.length - 1 ? 'Send application' : 'Continue';
+  }
+  window.addEventListener('resize', paint);
+
+  function validate(stepEl){
+    let firstBad = null;
+    stepEl.querySelectorAll('.q[data-req]').forEach(q => {
+      let ok = true;
+      const radio = q.dataset.radio;
+      if (radio) ok = !!form.elements[radio].value;
+      else {
+        const el = q.querySelector('input,textarea'), v = el.value.trim();
+        ok = v.length > 0;
+        if (ok && q.dataset.type === 'email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+        if (ok && q.dataset.type === 'url') {
+          if (!/^https?:\/\//i.test(v)) { el.value = 'https://' + v; }
+          try { new URL(el.value); } catch { ok = false; }
+        }
+      }
+      q.classList.toggle('bad', !ok);
+      if (!ok && !firstBad) firstBad = q;
+    });
+    if (firstBad) {
+      firstBad.scrollIntoView({behavior: 'smooth', block: 'center'});
+      const f = firstBad.querySelector('input,textarea'); if (f) f.focus({preventScroll: true});
+    }
+    return !firstBad;
+  }
+  form.addEventListener('input', e => { const q = e.target.closest('.q'); if (q) q.classList.remove('bad'); draft(); });
+  form.addEventListener('change', e => { const q = e.target.closest('.q'); if (q) q.classList.remove('bad'); draft(); if (e.target.name === 'capsule') paint(); });
+
+  // draft autosave (text answers only, files cannot be stored)
+  let t0;
+  function draft(){
+    clearTimeout(t0);
+    t0 = setTimeout(() => {
+      try {
+        const d = {};
+        new FormData(form).forEach((v, k) => { if (typeof v === 'string' && k !== 'website') d[k] = v; });
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({d, step: cur}));
+        saved.textContent = 'Answers saved on this device';
+      } catch {}
+    }, 400);
+  }
+  function restore(){
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY); if (!raw) return;
+      const {d, step} = JSON.parse(raw);
+      Object.entries(d).forEach(([k, v]) => {
+        if (k === 'src') return;
+        const el = form.elements[k]; if (!el) return;
+        if (el instanceof RadioNodeList) { [...el].forEach(r => r.checked = (r.value === v)); }
+        else el.value = v;
+      });
+      if (Number.isInteger(step) && order().includes(step)) cur = step;
+      saved.textContent = 'Welcome back, your answers are restored';
+    } catch {}
+  }
+
+  prev.addEventListener('click', () => {
+    const seq = order(); const pos = seq.indexOf(cur);
+    if (pos > 0) { cur = seq[pos - 1]; formerr.classList.remove('show'); paint(); window.scrollTo({top: document.querySelector('.march').offsetTop - 70, behavior: 'smooth'}); draft(); }
+  });
+  next.addEventListener('click', async () => {
+    if (!validate(steps[cur])) return;
+    const seq = order(); const pos = seq.indexOf(cur);
+    if (pos < seq.length - 1) { cur = seq[pos + 1]; paint(); window.scrollTo({top: document.querySelector('.march').offsetTop - 70, behavior: 'smooth'}); draft(); return; }
+    await send();
+  });
+
+  // uploads
+  const drop = document.getElementById('drop'), input = document.getElementById('files');
+  const list = document.getElementById('filelist'), ferr = document.getElementById('fileerr'), qf = document.getElementById('q-files');
+  function addFiles(fl){
+    let msg = '';
+    for (const f of fl) {
+      if (files.length >= MAX_FILES) { msg = 'You can upload up to 5 files.'; break; }
+      if (!/^(image\/(png|jpeg|webp)|application\/pdf)$/.test(f.type)) { msg = f.name + ' is not a PNG, JPG, WebP or PDF.'; continue; }
+      if (f.size > MAX_BYTES) { msg = f.name + ' is larger than 5 MB. Export a smaller version or share it as a link instead.'; continue; }
+      files.push(f);
+    }
+    ferr.textContent = msg; qf.classList.toggle('bad', !!msg);
+    renderFiles();
+  }
+  function renderFiles(){
+    list.innerHTML = '';
+    files.forEach((f, i) => {
+      const li = document.createElement('li');
+      const s = document.createElement('span'); s.textContent = f.name;
+      const em = document.createElement('em'); em.textContent = f.size < 1048576 ? Math.max(1, Math.round(f.size / 1024)) + ' KB' : (f.size / 1048576).toFixed(1) + ' MB'; s.appendChild(em);
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = 'Remove';
+      b.addEventListener('click', () => { files.splice(i, 1); renderFiles(); });
+      li.append(s, b); list.appendChild(li);
+    });
+  }
+  input.addEventListener('change', () => { addFiles(input.files); input.value = ''; });
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+
+  // optional Turnstile
+  if (TURNSTILE_SITE_KEY) {
+    const s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'; s.async = true; s.defer = true;
+    document.head.appendChild(s);
+    const w = document.createElement('div'); w.className = 'cf-turnstile'; w.dataset.sitekey = TURNSTILE_SITE_KEY; w.dataset.theme = 'dark';
+    w.style.marginTop = '18px'; document.getElementById('ts').appendChild(w);
+  }
+
+  async function send(){
+    formerr.classList.remove('show');
+    next.disabled = true; prev.disabled = true; next.textContent = 'Sending';
+    const fd = new FormData(form);
+    if (noCapsule()) ['capsule_games', 'years_capsule', 'best_capsule'].forEach(k => fd.delete(k));
+    else files.forEach(f => fd.append('capsule_files', f, f.name));
+    try {
+      const res = await fetch(ENDPOINT, {method: 'POST', body: fd});
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || !out.ok) throw new Error(out.error || 'We could not save your application.');
+      try { localStorage.removeItem(DRAFT_KEY); } catch {}
+      form.hidden = true; document.querySelector('.march').hidden = true;
+      const done = document.getElementById('done'); done.hidden = false;
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    } catch (err) {
+      formerr.textContent = err.message + ' Your answers are still here, so try sending again. If it keeps failing, email hiring@rivenza.in.';
+      formerr.classList.add('show');
+      next.disabled = false; prev.disabled = false; paint();
+    }
+  }
+
+  restore(); paint();
+})();
+</script>
+</body>
+</html>
