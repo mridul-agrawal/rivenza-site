@@ -31,7 +31,7 @@ const QUESTIONS = [
 ];
 
 const REQUIRED = ['name', 'email', 'location', 'portfolio', 'years_illustration', 'years_games',
-  'best_artwork', 'logo', 'ai', 'capsule', 'availability'];
+  'best_artwork', 'logo', 'ai', 'capsule', 'pay', 'availability'];
 const REQUIRED_IF_CAPSULE = ['capsule_games', 'years_capsule', 'best_capsule'];
 const URL_FIELDS = ['portfolio', 'best_artwork', 'best_capsule'];
 
