@@ -28,7 +28,6 @@ const QUESTIONS = [
   ['best_capsule', 'Capsule piece they are proudest of'],
   ['pay', 'Pay in most recent role or gig'],
   ['availability', 'Could start'], ['anything', 'Questions or anything else'],
-  ['src', 'Arrived from'],
 ];
 
 const REQUIRED = ['name', 'email', 'location', 'portfolio', 'years_illustration', 'years_games',
@@ -36,13 +35,39 @@ const REQUIRED = ['name', 'email', 'location', 'portfolio', 'years_illustration'
 const REQUIRED_IF_CAPSULE = ['capsule_games', 'years_capsule', 'best_capsule'];
 const URL_FIELDS = ['portfolio', 'best_artwork', 'best_capsule'];
 
-// Where the ?src= tag on the application link maps in the Source channel field.
+// Source tracking. utm_source is the platform, utm_medium the kind of placement,
+// utm_content the exact place (subreddit, server and channel, group, site), utm_term an
+// optional extra detail, and utm_campaign the hiring round. The old ?src= tag still works.
+const PLATFORM = {
+  reddit: 'Reddit', discord: 'Discord', whatsapp: 'WhatsApp', telegram: 'Telegram',
+  linkedin: 'LinkedIn', x: 'X', twitter: 'X', instagram: 'Instagram', facebook: 'Facebook',
+  artstation: 'ArtStation', behance: 'Behance', cara: 'Cara', workwithindies: 'Work With Indies',
+  jobboard: 'Job board', email: 'Email', college: 'College or placement cell', referral: 'Referral',
+  event: 'Event', website: 'Other website', site: 'rivenza.in', direct: 'Direct',
+};
 const SOURCE_CHANNEL = {
   reddit: 'Reddit', discord: 'Discord and chat groups', whatsapp: 'Discord and chat groups',
-  telegram: 'Discord and chat groups', linkedin: 'Job board', workwithindies: 'Job board',
-  artstation: 'Job board', behance: 'Job board', college: 'Placement cell', referral: 'Referral',
-  x: 'Owned inbound', instagram: 'Owned inbound', site: 'Owned inbound', direct: 'Owned inbound',
+  telegram: 'Discord and chat groups', facebook: 'Discord and chat groups', linkedin: 'Job board',
+  workwithindies: 'Job board', jobboard: 'Job board', artstation: 'Job board', behance: 'Job board',
+  college: 'Placement cell', referral: 'Referral', event: 'Event',
 };
+const slug = v => str(v).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 60);
+const nice = v => { const t = str(v).replace(/[_-]+/g, ' ').trim(); return t ? t.charAt(0).toUpperCase() + t.slice(1) : ''; };
+function readTracking(fd) {
+  const source = slug(fd.get('utm_source') || fd.get('src')) || 'direct';
+  const t = {
+    source,
+    platform: PLATFORM[source] || nice(source),
+    type: nice(slug(fd.get('utm_medium'))),
+    place: str(fd.get('utm_content')).slice(0, 150),
+    detail: str(fd.get('utm_term')).slice(0, 150),
+    campaign: str(fd.get('utm_campaign')).slice(0, 100),
+    referrer: str(fd.get('referrer')).slice(0, 300),
+    landing: str(fd.get('landing')).slice(0, 500),
+  };
+  t.summary = [t.platform, t.place, t.detail, t.type].filter(Boolean).join(' / ');
+  return t;
+}
 
 export default {
   async fetch(request, env) {
@@ -80,7 +105,7 @@ async function handleApplication(request, env) {
     a[key] = str(fd.get(key)).slice(0, long ? LIMITS.long : LIMITS.short);
   }
   a.email = a.email.toLowerCase();
-  a.src = (a.src || 'direct').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 60) || 'direct';
+  const tr = readTracking(fd);
   const hasCapsule = a.capsule === 'Yes';
   if (!hasCapsule) { a.capsule_games = ''; a.years_capsule = ''; a.best_capsule = ''; }
 
@@ -102,7 +127,8 @@ async function handleApplication(request, env) {
   const at = airtable(env);
   const today = new Date().toISOString().slice(0, 10);
   const answers = `Applied through rivenza.in on ${today}\n\n` +
-    QUESTIONS.filter(([k]) => a[k]).map(([k, label]) => `${label}\n${a[k]}`).join('\n\n');
+    QUESTIONS.filter(([k]) => a[k]).map(([k, label]) => `${label}\n${a[k]}`).join('\n\n') +
+    `\n\nArrived from\n${tr.summary}`;
 
   // Fields filled from the application. Staff fields (Stage, scores, notes) are only set on first contact.
   const fields = {
@@ -119,8 +145,6 @@ async function handleApplication(request, env) {
     'AI use': a.ai === 'No, never' ? 'Confirmed none' : 'Uses',
     fld9q45fgkQVub945: a.pay, // Recent pay (by field ID so renaming the field never breaks the form)
     'Availability': a.availability,
-    'Found via': `Application form (${a.src})`,
-    'Source channel': SOURCE_CHANNEL[a.src] || 'Owned inbound',
   };
   if (hasCapsule) {
     fields['Steam games worked on'] = a.capsule_games;
@@ -130,6 +154,18 @@ async function handleApplication(request, env) {
     fields['Steam capsule experience'] = 'None';
   }
 
+  const sourceFields = {
+    'Found via': `Application form: ${tr.summary}`,
+    'Source channel': SOURCE_CHANNEL[tr.source] || 'Owned inbound',
+    'Source platform': tr.platform,
+    'Source type': tr.type || null,
+    'Source place': tr.place,
+    'Source detail': tr.detail,
+    'Campaign': tr.campaign,
+    'Referrer': tr.referrer,
+    'Landing page': tr.landing,
+  };
+
   // Create a new candidate, or update the existing row when this email has applied or been sourced before.
   const existing = await at.findByEmail(a.email);
   let recordId;
@@ -138,10 +174,12 @@ async function handleApplication(request, env) {
     fields['Application answers'] = (answers + previous).slice(0, 90000);
     if (a.anything) fields['Notes'] = appendNote(existing.fields['Notes'], `Application (${today}): ${a.anything}`);
     fields['Last contact'] = today;
+    if (!existing.fields['Source platform']) Object.assign(fields, sourceFields);
     recordId = (await at.update(existing.id, fields)).id;
   } else {
     fields['Application answers'] = answers;
     if (a.anything) fields['Notes'] = `Application (${today}): ${a.anything}`;
+    Object.assign(fields, sourceFields);
     fields['Direction'] = 'Inbound';
     fields['Stage'] = 'New';
     fields['Date added'] = today;
@@ -175,7 +213,7 @@ function airtable(env) {
     async findByEmail(email) {
       const formula = `LOWER({Email}) = "${email.replace(/"/g, '')}"`;
       const q = new URLSearchParams({ filterByFormula: formula, maxRecords: '1' });
-      ['Application answers', 'Notes', 'Red flags'].forEach(f => q.append('fields[]', f));
+      ['Application answers', 'Notes', 'Red flags', 'Source platform'].forEach(f => q.append('fields[]', f));
       const out = await call(`${base}?${q}`, { method: 'GET' });
       return out.records && out.records[0];
     },
