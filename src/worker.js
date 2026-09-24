@@ -26,15 +26,13 @@ const QUESTIONS = [
   ['capsule_games', 'Capsule and key art projects'],
   ['years_capsule', 'Years making capsule or key art'],
   ['best_capsule', 'Capsule piece they are proudest of'],
-  ['freelance_rate', 'Most recent freelance project and charge'],
-  ['role_pay', 'Pay in relevant job or long engagement'],
-  ['usual_rate', 'Usual rate for one finished key art'],
+  ['pay', 'Pay in most recent role or gig'],
   ['availability', 'Could start'], ['anything', 'Questions or anything else'],
   ['src', 'Arrived from'],
 ];
 
 const REQUIRED = ['name', 'email', 'location', 'portfolio', 'years_illustration', 'years_games',
-  'best_artwork', 'logo', 'ai', 'capsule', 'freelance_rate', 'usual_rate', 'availability'];
+  'best_artwork', 'logo', 'ai', 'capsule', 'availability'];
 const REQUIRED_IF_CAPSULE = ['capsule_games', 'years_capsule', 'best_capsule'];
 const URL_FIELDS = ['portfolio', 'best_artwork', 'best_capsule'];
 
@@ -78,7 +76,7 @@ async function handleApplication(request, env) {
   // Collect and clean answers.
   const a = {};
   for (const [key] of QUESTIONS) {
-    const long = ['capsule_games', 'freelance_rate', 'role_pay', 'usual_rate', 'anything', 'profiles'].includes(key);
+    const long = ['capsule_games', 'pay', 'anything', 'profiles'].includes(key);
     a[key] = str(fd.get(key)).slice(0, long ? LIMITS.long : LIMITS.short);
   }
   a.email = a.email.toLowerCase();
@@ -119,9 +117,7 @@ async function handleApplication(request, env) {
     'Best artwork': a.best_artwork,
     'Logo and lettering evidence': ({ 'Yes, and my portfolio shows it': 'Yes', 'Yes, but it is not in my portfolio': 'Weak', 'No': 'No' })[a.logo],
     'AI use': a.ai === 'No, never' ? 'Confirmed none' : 'Uses',
-    'Previous freelance rate': a.freelance_rate,
-    'Previous role pay': a.role_pay,
-    'Usual rate': a.usual_rate,
+    fld9q45fgkQVub945: a.pay, // Recent pay (by field ID so renaming the field never breaks the form)
     'Availability': a.availability,
     'Found via': `Application form (${a.src})`,
     'Source channel': SOURCE_CHANNEL[a.src] || 'Owned inbound',
